@@ -1,7 +1,8 @@
-go 1.25.0
+go 1.26.5
 
 use (
 	./pkg
 	./services/api-gateway
 	./services/user-service
+	./services/auth-service
 )
