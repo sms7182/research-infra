@@ -1,6 +1,6 @@
 module research-dev/pkg
 
-go 1.26.5
+go 1.26.0
 
 require (
 	github.com/Nerzal/gocloak/v13 v13.9.0 // indirect
