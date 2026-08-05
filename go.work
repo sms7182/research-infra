@@ -3,6 +3,5 @@ go 1.26.0
 use (
 	./pkg
 	./services/api-gateway
-	./services/user-service
 	./services/auth-service
 )
