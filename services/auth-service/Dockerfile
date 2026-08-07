@@ -1,4 +1,4 @@
-FROM golang:1.26.0 as builder
+FROM golang:1.26.0-alpine AS builder
 
 WORKDIR /app
 
@@ -8,8 +8,17 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/auth-service ./services/auth-service/cmd/main.go
 
-FROM scratch
-COPY --from=builder /app/main /app/main
-ENTRYPOINT ["/app/main"]
+FROM alpine:latest
+
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /app
+
+
+COPY --from=builder /app/auth-service .
+
+EXPOSE 8082
+ENTRYPOINT ["./auth-service"]
