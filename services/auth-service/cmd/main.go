@@ -39,7 +39,7 @@ func main() {
 	mux.HandleFunc("POST /register", authHandler.Register)
 	mux.HandleFunc("POST /login", authHandler.Login)
 
-	log.Println("auth-service listening:8081")
+	log.Println("auth-service listening:8082")
 	if err := http.ListenAndServe(":8082", mux); err != nil {
 		log.Fatal(err)
 	}
