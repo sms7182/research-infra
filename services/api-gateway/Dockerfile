@@ -1,15 +1,24 @@
-FROM golang:1.26.0 as builder
+FROM golang:1.26.0-alpine AS builder
 
 WORKDIR /app
 
-COPY go.mod .
+COPY go.mod go.sum* ./
 
 RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o main ./cmd
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/api-gateway ./cmd
 
-FROM scratch
-COPY --from=builder /app/main /app/main
-ENTRYPOINT ["/app/main"]
+FROM alpine:latest
+
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /app
+
+
+COPY --from=builder /app/api-gateway .
+
+EXPOSE 8000
+ENTRYPOINT ["./api-gateway"]

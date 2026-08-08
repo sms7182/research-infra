@@ -54,5 +54,16 @@ services:
       - keycloak
       - postgres
 
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "7979:8000"
+    depends_on:
+      - keycloak
+      - postgres
+      - auth-service
+
 volumes:
   postgres_data:
